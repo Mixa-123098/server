@@ -105,7 +105,7 @@ app.get("/project_imges", async (req, res) => {
 app.get("/users", async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users ORDER BY id RETURNING *");
+    const result = await client.query("SELECT * FROM users ORDER BY id ");
     client.release();
     res.json(result.rows);
   } catch (error) {
