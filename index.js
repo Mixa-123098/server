@@ -21,8 +21,8 @@ const pool = new Pool({
   ssl: true, // Включаем SSL/TLS
 });
 
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 // const pool = new Pool({
@@ -119,7 +119,8 @@ app.post("/users", async (req, res) => {
     const { username, email, password, role } = req.body;
     const client = await pool.connect();
     const query =
-      "INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *";
+      "INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4)";
+      // "INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *";
     const values = [username, email, password, role];
     const result = await client.query(query, values);
     client.release();
@@ -159,7 +160,8 @@ app.put("/update_user_status/:username", async (req, res) => {
     const client = await pool.connect();
 
     const query =
-      "UPDATE users SET status = $1, token = $2 WHERE username = $3 RETURNING *";
+      "UPDATE users SET status = $1, token = $2 WHERE username = $3";
+      // "UPDATE users SET status = $1, token = $2 WHERE username = $3 RETURNING *";
 
     const result = await client.query(query, [status, token, username]);
 
@@ -186,7 +188,8 @@ app.put("/update_user_role/:username", async (req, res) => {
 
     const client = await pool.connect();
 
-    const query = "UPDATE users SET role = $1 WHERE username = $2 RETURNING *";
+    const query = "UPDATE users SET role = $1 WHERE username = $2 ";
+    // const query = "UPDATE users SET role = $1 WHERE username = $2 RETURNING *";
 
     const result = await client.query(query, [role, username]);
 
@@ -205,34 +208,6 @@ app.put("/update_user_role/:username", async (req, res) => {
     });
   }
 });
-
-// app.put("/update_user_status/:username", async (req, res) => {
-//   try {
-//     const { username } = req.params;
-//     const { status } = req.body;
-
-//     const client = await pool.connect();
-
-//     const query =
-//       "UPDATE users SET status = $1 WHERE username = $2 RETURNING *";
-
-//     const result = await client.query(query, [status, username]);
-
-//     client.release();
-
-//     if (result.rows.length > 0) {
-//       res.json(result.rows[0]);
-//     } else {
-//       res.status(404).json({ error: "Пользователь не найден" });
-//     }
-//   } catch (error) {
-//     console.error("Ошибка выполнения запроса:", error);
-//     res.status(500).json({
-//       error: "Произошла ошибка при выполнении запроса",
-//       details: error.message,
-//     });
-//   }
-// });
 
 let projectdir;
 app.post("/create_post", async (req, res) => {
@@ -256,7 +231,9 @@ app.post("/create_post", async (req, res) => {
     const client = await pool.connect();
 
     const insertProjectQuery = `
-      INSERT INTO projects (project_name, project_city, project_country, project_specialization, project_img_src, project_header_img, project_brief, project_finish_date, project_square, project_team)
+      INSERT INTO projects (project_name, project_city, project_country, 
+        project_specialization, project_img_src, project_header_img, project_brief,
+         project_finish_date, project_square, project_team)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`;
 
     const insertBlueprintQuery = `
@@ -329,7 +306,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage }).single('file'); 
+const upload = multer({ storage }).single("file");
 
 app.post("/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -342,7 +319,7 @@ app.post("/upload", (req, res) => {
       return res.status(400).send("No file uploaded.");
     }
 
-    console.log('File details:', req.file);
+    console.log("File details:", req.file);
     res.send("File uploaded!");
   });
 });
