@@ -4,7 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { Pool } = require("pg");
@@ -491,31 +491,31 @@ app.put("/update_project/:projectId", async (req, res) => {
   }
 });
 
-app.post("/joinTeam", (req, res) => {
-  const { name, email, message } = req.body;
+// app.post("/joinTeam", (req, res) => {
+//   const { name, email, message } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "mixxxxxxxxxxa13@gmail.com",
-      pass: "Ms_123098",
-    },
-  });
+//   const transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//       user: "mixxxxxxxxxxa13@gmail.com",
+//       pass: "Ms_123098",
+//     },
+//   });
 
-  const mailOptions = {
-    from: `mixxxxxxxxxxa13@gmail.com`,
-    to: "mixxxxxxxxxxa13@gmail.com",
-    subject: "New Join Request",
-    text: `Name:${name}\n Email: ${email}\nMessage: ${message}`,
-  };
+//   const mailOptions = {
+//     from: `mixxxxxxxxxxa13@gmail.com`,
+//     to: "mixxxxxxxxxxa13@gmail.com",
+//     subject: "New Join Request",
+//     text: `Name:${name}\n Email: ${email}\nMessage: ${message}`,
+//   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return res.status(500).send(error.toString());
-    }
-    res.status(200).send("Email sent: " + info.response);
-  });
-});
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       return res.status(500).send(error.toString());
+//     }
+//     res.status(200).send("Email sent: " + info.response);
+//   });
+// });
 
 app.get("/get-file/:fileName", (req, res) => {
   const fileName = req.params.fileName;
