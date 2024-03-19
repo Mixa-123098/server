@@ -4,7 +4,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-// const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { Pool } = require("pg");
@@ -19,6 +18,7 @@ const pool = new Pool({
   database: "portfolio_zdxw",
   password: "VpIC48TmECcU8fyfgyCKxw1qLkcMRa7G",
   port: 5432,
+  ssl: true, // Включаем SSL/TLS
 });
 
 app.get('/health', (req, res) => {
@@ -105,7 +105,7 @@ app.get("/project_imges", async (req, res) => {
 app.get("/users", async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users ORDER BY id");
+    const result = await client.query("SELECT * FROM users ORDER BY id RETURNING *");
     client.release();
     res.json(result.rows);
   } catch (error) {
