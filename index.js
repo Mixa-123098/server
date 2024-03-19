@@ -20,6 +20,11 @@ const pool = new Pool({
   password: "VpIC48TmECcU8fyfgyCKxw1qLkcMRa7G",
   port: 5432,
 });
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // const pool = new Pool({
 //   user: "postgres",
 //   host: "localhost",
