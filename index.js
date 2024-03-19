@@ -14,12 +14,19 @@ const app = express();
 
 const PORT = 3001;
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "portfolio",
-  password: "123098",
+  user: "portfolio_zdxw_user",
+  host: "dpg-cnsok20l6cac73dbjavg-a.frankfurt-postgres.render.com",
+  database: "portfolio_zdxw",
+  password: "VpIC48TmECcU8fyfgyCKxw1qLkcMRa7G",
   port: 5432,
 });
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "portfolio",
+//   password: "123098",
+//   port: 5432,
+// });
 
 app.use(cors());
 
