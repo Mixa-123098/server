@@ -8,39 +8,24 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { Pool } = require("pg");
 const { log } = require("console");
-
+require('dotenv').config();
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const pool = new Pool({
   user: "site_portfolio_final_version_user",
   password: "AomyENvMp6nTOtzZfdpVRKjY2uKSS8MF",
-  // dlit
   host: "dpg-cq2i1tbv2p9s73etb0n0-a.oregon-postgres.render.com",
   port: 5432,
   database: "site_portfolio_final_version",
-  ssl: true, // Включаем SSL/TLS
+  ssl: true,
 });
-// const pool = new Pool({
-//   user: "portfolio_zdxw_user",
-//   host: "dpg-cnsok20l6cac73dbjavg-a.frankfurt-postgres.render.com",
-//   database: "portfolio_zdxw",
-//   password: "VpIC48TmECcU8fyfgyCKxw1qLkcMRa7G",
-//   port: 5432,
-//   ssl: true, // Включаем SSL/TLS
-// });
+
 
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
-// const pool = new Pool({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "portfolio",
-//   password: "123098",
-//   port: 5432,
-// });
 
 app.use(cors());
 
